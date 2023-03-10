@@ -15,7 +15,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import CategoryLoading from '../../components/Placeholders/CategoryLoading';
 
 const Index = ({navigation, route}) => {
-  const {category} = route.params;
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [term, setTerm] = useState('');
@@ -29,13 +28,12 @@ const Index = ({navigation, route}) => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await api.post('/product/' + category.category_id);
-      // console.log(res.data.data);
+      const res = await api.post('/product/' + '2');
+   
       setLoading(false);
       if (res.status === 200) {
         if (res.data.status === 'success') {
           setProducts(res.data.data);
-          console.log('fetchProducts', res.data.data.length);
         }
       }
     } catch (error) {
@@ -48,13 +46,13 @@ const Index = ({navigation, route}) => {
       fetchProducts={fetchProducts}
       onPress={() => {}}
       item={item}
-      categoryId={category.category_id}
+      categoryId={'1'}
     />
   );
 
   return (
     <Container>
-      <Header text="Product" color={colors.white} showBack />
+      <Header text="Favourites" color={colors.white} showBack />
       <SubContainer>
         <SearchBar placeholder="Search products" onChangeText={setTerm} />
         {loading && <CategoryLoading />}
@@ -65,14 +63,7 @@ const Index = ({navigation, route}) => {
           numColumns={2}
           renderItem={renderProduct}
         />
-        <Fab
-          onPress={() =>
-            navigation.navigate('AddProduct', {
-              isEdit: false,
-              categoryId: category.category_id,
-            })
-          }
-        />
+        
       </SubContainer>
     </Container>
   );

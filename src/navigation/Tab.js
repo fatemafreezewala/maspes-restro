@@ -16,6 +16,7 @@ import Products from '../screens/Home/Products';
 import Icon5 from '../utilities/icons/tab5';
 import OrderDetails from '../screens/Order/OrderDetails';
 import Categories from '../screens/Home/Categories';
+import Favourite from '../screens/Favourite/Index';
 
 const screenOptions = {
   headerShown: false,
@@ -71,7 +72,7 @@ const App = () => {
       />
        <Tab.Screen
         name="Favourite"
-        component={HomeStack}
+        component={Favourite}
         options={{
           tabBarIcon: ({color, size, focused}) => (
             <Icon3 color={focused ? colors.primary : colors.iconinactive} />
