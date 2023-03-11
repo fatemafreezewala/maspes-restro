@@ -17,6 +17,7 @@ import Icon5 from '../utilities/icons/tab5';
 import OrderDetails from '../screens/Order/OrderDetails';
 import Categories from '../screens/Home/Categories';
 import Favourite from '../screens/Favourite/Index';
+import Cart from '../screens/Cart';
 
 const screenOptions = {
   headerShown: false,
@@ -26,8 +27,12 @@ const Home = createNativeStackNavigator();
 function HomeStack() {
   return (
     <Home.Navigator>
-       <Home.Screen options={screenOptions} name="Index" component={Index} />
-      <Home.Screen options={screenOptions} name="Category" component={Categories} />
+      <Home.Screen options={screenOptions} name="Index" component={Index} />
+      <Home.Screen
+        options={screenOptions}
+        name="Category"
+        component={Categories}
+      />
       <Home.Screen
         options={screenOptions}
         name="Products"
@@ -70,7 +75,7 @@ const App = () => {
           ),
         }}
       />
-       <Tab.Screen
+      <Tab.Screen
         name="Favourite"
         component={Favourite}
         options={{
@@ -79,9 +84,9 @@ const App = () => {
           ),
         }}
       />
-        <Tab.Screen
+      <Tab.Screen
         name="Cart"
-        component={HomeStack}
+        component={Cart}
         options={{
           tabBarIcon: ({color, size, focused}) => (
             <Icon2 color={focused ? colors.primary : colors.iconinactive} />
@@ -97,7 +102,7 @@ const App = () => {
           ),
         }}
       />
-      
+
       {/*  */}
 
       <Tab.Screen

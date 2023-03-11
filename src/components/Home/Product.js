@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import globalStyle from '../../styles/globalStyle';
 import TextComp from '../TextComp';
 import colors from '../../utilities/colors';
@@ -14,15 +14,35 @@ import margins from '../../utilities/margins';
 import currency from '../../utilities/currency';
 import {api, imageUrl} from '../../constant/api';
 import toast from '../../utilities/toast';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import ProductDetail from './ProductDetail';
 import FastImage from 'react-native-fast-image';
+import {useCartStore} from '../../constant/store';
+
 const Product = ({item, onPress, fetchProducts, categoryId}) => {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
   const navigation = useNavigation();
+  const [addToCart, isInCart, removeItem, cart] = useCartStore(state => [
+    state.addToCart,
+    state.isInCart,
+    state.removeItem,
+    state.cart,
+  ]);
+  const [added, setAdded] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      checkIsInCart();
+    }, [cart]),
+  );
+
+  const checkIsInCart = () => {
+    const res = isInCart(item.prod_id);
+    setAdded(res);
+  };
+
   const addIcon = `
   <svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M4.776 2.384H3.072V4.112H2.392V2.384H0.696V1.768H2.392V0.0319996H3.072V1.768H4.776V2.384Z" fill=${colors.primary}/>
@@ -69,7 +89,7 @@ const Product = ({item, onPress, fetchProducts, categoryId}) => {
             fontSize={11}
             color={colors.black}
           />
-          <SvgXml xml={heart}></SvgXml>
+          <SvgXml xml={heart} />
         </View>
         <View
           style={[
@@ -90,33 +110,42 @@ const Product = ({item, onPress, fetchProducts, categoryId}) => {
             />
           </View>
 
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-
-              paddingHorizontal: 15,
-              borderColor: colors.primary,
-              borderRadius: 5,
-            }}
-            onPress={() => {}}>
-            <SvgXml
-              style={{position: 'absolute', right: 0, top: 5}}
-              width={15}
-              height={10}
-              xml={addIcon}></SvgXml>
-            <TextComp
-              style={{marginTop: 5}}
-              fontSize={10}
-              color={colors.primary}
-              text="Add"
-            />
-          </TouchableOpacity>
+          {added ? (
+            <TouchableOpacity
+              onPress={() => {
+                removeItem(item.prod_id);
+                checkIsInCart();
+              }}>
+              <TextComp text="remove" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => {
+                addToCart(item);
+                checkIsInCart();
+              }}>
+              <TextComp
+                // style={{marginTop: 5}}
+                fontSize={10}
+                color={colors.primary}
+                text="Add"
+              />
+              <SvgXml
+                // style={{position: 'absolute', right: 0, top: 5}}
+                width={15}
+                height={10}
+                xml={addIcon}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </Pressable>
       <ProductDetail
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        id={item.prod_id}></ProductDetail>
+        id={item.prod_id}
+      />
     </>
   );
 };
@@ -125,5 +154,14 @@ export default Product;
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+  },
+  addButton: {
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    borderColor: colors.primary,
+    borderRadius: 5,
+    padding: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

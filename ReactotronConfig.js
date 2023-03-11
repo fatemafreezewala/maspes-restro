@@ -1,7 +1,7 @@
 import Reactotron from 'reactotron-react-native';
 
 Reactotron.configure({
-  name: 'Admin App',
+  name: 'User App',
 }) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from // controls connection & communication settings
   .useReactNative({
     asyncStorage: false, // there are more options to the async storage.

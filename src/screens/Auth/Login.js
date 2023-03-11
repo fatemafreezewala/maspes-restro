@@ -29,9 +29,9 @@ const Index = ({navigation}) => {
 
     try {
       setLoading(true);
-      const res = await api.post('/admin', {
-        admin_email: email,
-        admin_password: stringMd5(password),
+      const res = await api.post('/user', {
+        user_email: email,
+        user_password: stringMd5(password),
       });
       setLoading(false);
       console.log(res.data);
@@ -93,10 +93,19 @@ const Index = ({navigation}) => {
         />
         <Button onPress={onLogin} loading={loading} text="Login" />
       </View>
-      <View style={[globalStyle.row,{justifyContent:'center',marginBottom:margins.m5}]}>
-        <TextComp color={colors.black} text='Don’t have an Account? '></TextComp>
-        <TouchableOpacity onPress={()=>navigation.navigate('SignUp')}>
-          <TextComp type='medium' color={colors.primary} text=' Sign up here'></TextComp>
+      <View
+        style={[
+          globalStyle.row,
+          {justifyContent: 'center', marginBottom: margins.m5},
+        ]}>
+        <TextComp
+          color={colors.black}
+          text="Don’t have an Account? "></TextComp>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <TextComp
+            type="medium"
+            color={colors.primary}
+            text=" Sign up here"></TextComp>
         </TouchableOpacity>
       </View>
     </Container>
