@@ -29,7 +29,7 @@ const Index = ({navigation, route}) => {
     try {
       setLoading(true);
       const res = await api.post('/product/' + '2');
-   
+
       setLoading(false);
       if (res.status === 200) {
         if (res.data.status === 'success') {
@@ -37,6 +37,7 @@ const Index = ({navigation, route}) => {
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -63,7 +64,6 @@ const Index = ({navigation, route}) => {
           numColumns={2}
           renderItem={renderProduct}
         />
-        
       </SubContainer>
     </Container>
   );

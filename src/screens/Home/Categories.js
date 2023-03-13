@@ -45,7 +45,8 @@ const Index = ({navigation, onChangeText}) => {
       onPress={() => {
         console.log('category', item);
         navigation.navigate('Products', {
-          category: item,
+          category_id: item.category_id,
+          categories:categories
         });
       }}
       item={item}
@@ -67,13 +68,7 @@ const Index = ({navigation, onChangeText}) => {
           numColumns={2}
           renderItem={renderCategories}
         />
-        <Fab
-          onPress={() =>
-            navigation.navigate('AddCategory', {
-              isEdit: false,
-            })
-          }
-        />
+        
       </SubContainer>
     </Container>
   );

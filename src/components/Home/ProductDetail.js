@@ -7,6 +7,7 @@ import {
   Touchable,
   TouchableOpacity,
   View,
+  Image
 } from 'react-native';
 import TextComp from '../TextComp';
 import currency from '../../utilities/currency';
@@ -20,6 +21,8 @@ import Ant from 'react-native-vector-icons/AntDesign';
 import ION from 'react-native-vector-icons/Ionicons';
 import FlatlistComp from '../FlatListComp';
 import { Checkbox } from 'react-native-paper';
+import {  SvgXml } from 'react-native-svg';
+import DefaultProductIcon from '../../assets/images/home/defaultpro.svg';
 
 const ProductDetail = ({id, setModalVisible, modalVisible}) => {
   const [item, setItem] = useState();
@@ -54,15 +57,19 @@ const ProductDetail = ({id, setModalVisible, modalVisible}) => {
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Ant
+         <View style={{flex:2.5}}>
+         <Ant
             onPress={() => {
               setModalVisible(false);
             }}
             style={{position: 'absolute', right: 20, top: 20, zIndex: 20}}
             color={colors.white}
             size={25}
-            name="close"></Ant>
-          {item && (
+            name="close"></Ant> 
+          {item &&  !item.prod_name_image  ? (
+            // <SvgXml height={180}  width={'100%'} xml={defaultProductIcon}></SvgXml>
+            <DefaultProductIcon width="100%" height={180}></DefaultProductIcon>
+          ) : (
             <FastImage
               style={{
                 width: '100%',
@@ -71,7 +78,7 @@ const ProductDetail = ({id, setModalVisible, modalVisible}) => {
                 borderTopLeftRadius: 15,
               }}
               resizeMode="cover"
-              source={{uri: `${imageUrl}/${item.prod_name_image}`}}
+              source={{uri: `${imageUrl}/${item?.prod_name_image}`}}
             />
           )}
 
@@ -117,7 +124,10 @@ const ProductDetail = ({id, setModalVisible, modalVisible}) => {
               text={item && item?.prod_desp_en}
               color={colors.black}></TextComp>
 
-            <View style={{flexDirection: 'row'}}>
+            
+          </View>
+         </View>
+          <View style={{flexDirection: 'row',flex:0.4,padding:10}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -143,8 +153,8 @@ const ProductDetail = ({id, setModalVisible, modalVisible}) => {
                 <Button text="Add to Cart"></Button>
               </View>
             </View>
-          </View>
         </View>
+       
       </View>
     </Modal>
   );
@@ -158,13 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
     alignItems: 'center',
     backgroundColor: '#20232a7a',
+    flexDirection:'column'
   },
   modalView: {
     backgroundColor: 'white',
-
     width: '100%',
     height: '80%',
-
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -174,6 +183,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     borderRadius: 15,
+    flexDirection:'column',
+    flex:0.7
   },
 });
 

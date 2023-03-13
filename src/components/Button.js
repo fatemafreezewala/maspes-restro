@@ -16,18 +16,19 @@ const Button = ({
   width = '100%',
   height = 50,
   onPress,
+  style
 }) => {
   return (
     <Pressable
       onPress={onPress}
-      style={{
+      style={[{
         alignItems: 'center',
         width: width,
         height: height,
         backgroundColor: loading ? colors.grey : colors.primary,
         borderRadius: 10,
         justifyContent: 'center',
-      }}
+      },style]}
       disabled={loading}>
       {loading ? (
         <AnimatedLottieView

@@ -50,7 +50,7 @@ const Index = () => {
           numberOfColumns={false}
           renderItem={renderTables}
         />
-        <Fab icon="qrcode" />
+       
       </SubContainer>
     </Container>
   );

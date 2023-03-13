@@ -10,7 +10,7 @@ interface Props {
   color?: string;
 }
 
-const TextComp = ({text, type = 'normal', fontSize, style, color}: Props) => {
+const TextComp = ({text, type = 'normal', fontSize, style, color='#000'}: Props) => {
   if (type === 'normal') {
     return (
       <Text

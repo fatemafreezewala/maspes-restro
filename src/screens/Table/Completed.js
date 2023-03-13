@@ -50,7 +50,7 @@ const Completed = () => {
           numberOfColumns={false}
           renderItem={renderTables}
         />
-        <Fab icon="qrcode" />
+       
       </SubContainer>
     </Container>
   );

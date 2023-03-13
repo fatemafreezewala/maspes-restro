@@ -3,8 +3,6 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import OrderList from '../screens/Order/Index';
-import Tables from '../screens/Table/Index';
-import Users from '../screens/Users/Index';
 import More from '../screens/More/Index';
 import colors from '../utilities/colors';
 import Icon2 from '../utilities/icons/tab2';
@@ -91,6 +89,16 @@ const App = () => {
           tabBarIcon: ({color, size, focused}) => (
             <Icon2 color={focused ? colors.primary : colors.iconinactive} />
           ),
+          tabBarIconStyle: {
+            backgroundColor: colors.primary,
+            width: 50,
+            height: 50,
+            borderRadius:200,
+            borderWidth:2,
+            borderColor:colors.white,
+            position:'absolute',
+            bottom:20
+          },
         }}
       />
       <Tab.Screen
@@ -102,9 +110,6 @@ const App = () => {
           ),
         }}
       />
-
-      {/*  */}
-
       <Tab.Screen
         name="More"
         component={More}

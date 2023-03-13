@@ -14,15 +14,13 @@ import Accepted from './Accepted';
 const Index = () => {
   const renderScene = SceneMap({
     first: Pending,
-    second: Accepted,
-    third: Completed,
+    third: Completed
   });
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'Pending'},
-    {key: 'second', title: 'Accepted'},
     {key: 'third', title: 'Completed'},
   ]);
   const renderTabBar = props => (

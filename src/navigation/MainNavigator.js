@@ -12,6 +12,8 @@ import AddProduct from '../screens/AddProduct';
 import AddCategory from '../screens/AddCategory';
 import Notifications from '../screens/More/Notifications';
 import ResDetails from '../screens/More/ResDetails';
+import Info from '../screens/More/Info';
+import Tables from '../screens/Table/Index';
 
 const Stack = createNativeStackNavigator();
 
@@ -101,6 +103,16 @@ const App = () => {
                   options={screenOptions}
                   name="Table"
                   component={Table}
+                />
+                <Stack.Screen
+                  options={screenOptions} 
+                  name="Info"
+                  component={Info}
+                />
+                <Stack.Screen
+                  options={screenOptions} 
+                  name="Tables"
+                  component={Tables}
                 />
                 
               </>

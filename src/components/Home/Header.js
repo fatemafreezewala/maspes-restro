@@ -5,15 +5,15 @@ import globalStyle from '../../styles/globalStyle';
 import margins from '../../utilities/margins';
 import colors from '../../utilities/colors';
 
-const Header = ({page, title,navigation}) => {
+const Header = ({title,onPress}) => {
   return (
     <View
       style={[
         globalStyle.row,
-        {justifyContent: 'space-between', marginBottom: margins.m5},
+        {justifyContent: 'space-between', marginTop: margins.m3},
       ]}>
       <TextComp color={colors.black} text={title}></TextComp>
-      <TouchableOpacity onPress={() => navigation.navigate(page)}>
+      <TouchableOpacity onPress={onPress}>
         <TextComp
           type="medium"
           color={colors.primary}

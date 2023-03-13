@@ -7,48 +7,54 @@ import UserProfile from '../../components/Menu/UserProfile';
 import FlatlistComp from '../../components/FlatListComp';
 import Card from '../../components/Menu/Card';
 import {Divider} from 'react-native-paper';
-import {ScrollView} from 'react-native';
+import {Platform, ScrollView} from 'react-native';
 //demo Data
 import menu from '../../data/menu';
 import margins from '../../utilities/margins';
 import AuthContext from '../../navigation/Auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUserStore} from '../../constant/store';
+import {appStoreLink, playStoreLink} from '../../constant/appConstants';
+import Share from 'react-native-share';
 
 const Index = ({navigation}) => {
   const {signOut} = useContext(AuthContext);
   const [user, clear] = useUserStore(s => [s.user, s.clear]);
-
+  const onShare = async () => {
+    try {
+      const result = await Share.open({
+        title: 'App link',
+        message: 'Please install this app from store \n',
+        url: Platform.OS == 'android' ? playStoreLink : appStoreLink,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+      }
+    } catch (error) {}
+  };
   const renderMenu = ({item}) => (
     <Card
       onPress={async () => {
         if (item.name === 'Logout') {
-          console.log('Logout pressed');
           await AsyncStorage.removeItem('USER_TOKEN');
           clear();
-          signOut();
-        } else if (item.name === 'About us') {
-          navigation.navigate('Editor', {
-            title: 'About Us',
-            type: 1,
-          });
-        } else if (item.name === 'Privacy') {
-          navigation.navigate('Editor', {
-            title: 'Privacy Policy',
-            type: 2,
-          });
-        } else if (item.name === 'Terms') {
-          navigation.navigate('Editor', {
-            title: 'Terms and Conditions',
-            type: 3,
-          });
-        } else if (item.name === 'Notifications') {
-          navigation.navigate('Notifications');
-        } else if (item.name === 'Restaurant detail') {
-          navigation.navigate('ResDetails');
+          signOut(); 
+        } else if (item.name === 'Share App') {
+          onShare()
         } else {
-          // console.log('tables');
-          navigation.navigate('Table');
+          if(item.type){
+            navigation.navigate(item.page,{
+              title:item.type
+            });
+          }else{
+            navigation.navigate(item.page);
+          }
+          
         }
       }}
       item={item}

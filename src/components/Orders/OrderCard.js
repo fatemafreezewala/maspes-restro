@@ -8,7 +8,7 @@ import margins from '../../utilities/margins';
 import fontSize from '../../utilities/fontSize';
 import fontFamily from '../../utilities/fontFamily';
 import currency from '../../utilities/currency';
-
+import Logo from '../../assets/images/home/logo.svg'
 const OrderCard = ({item, onPress, showUser = true, showSubItems = false}) => {
   const userIco = `
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@ const OrderCard = ({item, onPress, showUser = true, showSubItems = false}) => {
             },
           ]}>
           <View style={styles.row}>
-            <SvgXml xml={userIco} />
+            <Logo width={60} height={60}></Logo>
             <View style={{marginLeft: margins.m5}}>
               <View style={styles.row}>
                 <TextComp

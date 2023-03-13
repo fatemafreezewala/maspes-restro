@@ -1,21 +1,17 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header';
 import colors from '../../utilities/colors';
 import Container from '../../components/Container';
 import SubContainer from '../../components/SubContainer';
-import SearchBar from '../../components/SearchBar';
-import FlatlistComp from '../../components/FlatListComp';
-import Product from '../../components/Home/Product';
-import Fab from '../../components/Fab';
 import {api} from '../../constant/api';
-import {useFocusEffect} from '@react-navigation/native';
-import CategoryLoading from '../../components/Placeholders/CategoryLoading';
 import TextComp from '../../components/TextComp';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Spinner from '../../components/Spinner';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import notificationIcons from '../../utilities/icons/notificationIcons';
+import {SvgXml} from 'react-native-svg';
 
 dayjs.extend(relativeTime);
 
@@ -41,19 +37,6 @@ const Notifications = () => {
     }
   };
 
-  const deleteNotif = async id => {
-    try {
-      setLoading(true);
-      const res = await api.delete('/notification/' + id);
-      setLoading(false);
-      if (res.data.status === 'success') {
-        fetchNotifications();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Container>
       <Header text="Notifications" color={colors.white} showBack />
@@ -64,12 +47,7 @@ const Notifications = () => {
           renderItem={({item}) => {
             return (
               <View style={styles.card}>
-                <Icon
-                  name="bells"
-                  color={colors.primary}
-                  size={25}
-                  style={{marginTop: 5}}
-                />
+                <SvgXml xml={notificationIcons.order}></SvgXml>
                 <View style={{flex: 1, marginLeft: 10}}>
                   <View
                     style={{
@@ -80,19 +58,23 @@ const Notifications = () => {
                     <TextComp
                       text={item.notification_title}
                       type="medium"
+                      fontSize={12}
+                      color={colors.black}
                       style={{flex: 1}}
                     />
                     <TextComp
                       text={item.notification_createdat}
                       type="medium"
+                      fontSize={8}
                       color={colors.primary}
                     />
                   </View>
-                  <TextComp text={item.notification_desp} />
-                  <TouchableOpacity
-                    onPress={() => deleteNotif(item.notification_id)}>
-                    <TextComp text="Remove" type="medium" color="red" />
-                  </TouchableOpacity>
+                  <TextComp
+                    color={colors.black}
+                    fontSize={12}
+                    text={item.notification_desp && item.notification_desp.substring(0,100)}
+                  />
+                
                 </View>
               </View>
             );

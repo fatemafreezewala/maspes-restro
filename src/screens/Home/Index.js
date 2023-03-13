@@ -2,9 +2,8 @@ import React, {useState, useCallback} from 'react';
 import Container from '../../components/Container';
 import SubContainer from '../../components/SubContainer';
 import SearchBar from '../../components/SearchBar';
-import {Image, ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 //demo Data
-// import categories from '../../data/categories';
 import FlatlistComp from '../../components/FlatListComp';
 import MiniCategories from '../../components/Home/MiniCategories';
 import {api} from '../../constant/api';
@@ -13,14 +12,20 @@ import CategoryLoading from '../../components/Placeholders/CategoryLoading';
 import Header from '../../components/Home/Header';
 import Product from '../../components/Home/Product';
 import HomeHeader from '../../components/Home/HomeHeader';
-const Index = ({navigation, onChangeText}) => {
+import Banner from '../../components/Home/Banner';
+import RestroSvg from '../../assets/images/home/restro.svg';
+import globalStyle from '../../styles/globalStyle';
+import {useUserStore} from '../../constant/store';
+
+const Index = ({navigation}) => {
   const [loading, setLoading] = useState(false);
+  const [term, setTerm] = useState('');
+  const [user, clear] = useUserStore(s => [s.user, s.clear]);
   const [homedata, setHomeData] = useState({
     banner: [],
     categories: [],
     popular_product: [],
   });
-  const [term, setTerm] = useState('');
 
   useFocusEffect(
     useCallback(() => {
@@ -40,6 +45,7 @@ const Index = ({navigation, onChangeText}) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -56,28 +62,50 @@ const Index = ({navigation, onChangeText}) => {
     />
   );
   const renderCategories = ({item}) => (
-    <Product
+    <MiniCategories
       onPress={() => {
-        console.log('category', item);
         navigation.navigate('Products', {
           category: item,
         });
       }}
       item={item}
-      fetchCategories={fetchCategories}
     />
   );
   return (
     <Container>
       <SubContainer>
-        <HomeHeader></HomeHeader>
+        <HomeHeader user={user}></HomeHeader>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Image source={require('../../assets/images/home/home.jpg')}></Image>
+          <RestroSvg width="99%"></RestroSvg>
           <SearchBar placeholder="Search Category" onChangeText={setTerm} />
-          {loading && <CategoryLoading />}
-          <Header navigation={navigation} title={'Categories'} page={'Category'}></Header>
+          <Banner banners={homedata.banner}></Banner>
+          {/* {loading && <CategoryLoading />} */}
+          <Header
+            title={'Categories'}
+            onPress={() => navigation.navigate('Category')}></Header>
+          <View style={globalStyle.row}>
+            {homedata.categories &&
+              homedata.categories.slice(0, 4).map(ele => (
+                <MiniCategories
+                  onPress={() => {
+                    navigation.navigate('Products', {
+                      category_id: ele.category_id,
+                      categories: homedata.categories
+                    });
+                  }}
+                  item={ele}
+                />
+              ))}
+          </View>
 
-          <Header navigation={navigation} title={'Famous Products'}></Header>
+          <Header
+            onPress={() =>
+              navigation.navigate('Products', {
+                category_id: '2',
+                categories: homedata.categories,
+              })
+            }
+            title={'Famous Products'}></Header>
           <FlatlistComp
             DATA={
               homedata.popular_product &&

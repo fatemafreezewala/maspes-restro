@@ -3,37 +3,58 @@ import menu from '../utilities/icons/menu';
 export default [
   {
     id: '1',
-    name: 'About us',
+    name: 'Notifications',
     image: menu.m1,
+    page:'Notifications'
   },
   {
     id: '2',
-    name: 'Privacy',
+    name: 'Table Bookings',
     image: menu.m2,
+    page:'Tables'
   },
   {
     id: '3',
-    name: 'Terms',
+    name: 'Get Bills',
     image: menu.m3,
+    page:'Tables'
+  },
+  {
+    id:'10',
+    name:'Rewards/Wallet',
+    image:menu.m8,
+    page:'Rewards'
   },
   {
     id: '4',
-    name: 'Notifications',
+    name: 'About us',
     image: menu.m4,
+    page:'Info',
+    type:'about'
   },
   {
     id: '5',
-    name: 'Restaurant detail',
+    name: 'Share App',
     image: menu.m5,
+
   },
   {
     id: '6',
-    name: 'Table Booking',
+    name: 'Terms',
     image: menu.m6,
+    page:'Info',
+    type:'terms'
+  },
+  {
+    id: '8',
+    name: 'Policy',
+    image: menu.m6,
+    page:'Info',
+    type:'policy'
   },
   {
     id: '7',
     name: 'Logout',
-    image: menu.m6,
+    image: menu.m7,
   },
 ];

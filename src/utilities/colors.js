@@ -7,6 +7,7 @@ const colors = {
     grey:'#A2A3B8',
     borderColor:'#E7E9EE',
     iconinactive:'#D0D5E3',
-    menuColor:"#D9EFD8"
+    menuColor:"#D9EFD8",
+    inactiveColor:'#D0E3DC'
 }
 export default colors

@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import {View, ScrollView, Pressable} from 'react-native';
 import Header from '../../components/Header';
 import colors from '../../utilities/colors';
 import Container from '../../components/Container';
@@ -6,19 +7,20 @@ import SubContainer from '../../components/SubContainer';
 import SearchBar from '../../components/SearchBar';
 
 //demo Data
-import product from '../../data/product';
 import FlatlistComp from '../../components/FlatListComp';
 import Product from '../../components/Home/Product';
-import Fab from '../../components/Fab';
 import {api} from '../../constant/api';
 import {useFocusEffect} from '@react-navigation/native';
 import CategoryLoading from '../../components/Placeholders/CategoryLoading';
+import TextComp from '../../components/TextComp';
+import globalStyle from '../../styles/globalStyle';
 
 const Index = ({navigation, route}) => {
-  const {category} = route.params;
+  const {category_id, categories} = route.params;
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [term, setTerm] = useState('');
+  const [selectedCat, setSelectedCat] = useState(2);
 
   useFocusEffect(
     useCallback(() => {
@@ -27,10 +29,10 @@ const Index = ({navigation, route}) => {
   );
 
   const fetchProducts = async () => {
+    console.log(category_id);
     try {
       setLoading(true);
-      const res = await api.post('/product/' + category.category_id);
-      // console.log(res.data.data);
+      const res = await api.post('/product/' + category_id);
       setLoading(false);
       if (res.status === 200) {
         if (res.data.status === 'success') {
@@ -48,7 +50,7 @@ const Index = ({navigation, route}) => {
       fetchProducts={fetchProducts}
       onPress={() => {}}
       item={item}
-      categoryId={category.category_id}
+      categoryId={category_id}
     />
   );
 
@@ -57,6 +59,39 @@ const Index = ({navigation, route}) => {
       <Header text="Product" color={colors.white} showBack />
       <SubContainer>
         <SearchBar placeholder="Search products" onChangeText={setTerm} />
+        <View style={globalStyle.row}>
+          <ScrollView horizontal>
+            {categories &&
+              categories.map(res => {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      setSelectedCat(res.category_id);
+                    }}
+                    style={{
+                      paddingHorizontal: 18,
+                      paddingVertical: 5,
+                      backgroundColor:
+                        selectedCat == res.category_id
+                          ? colors.primary
+                          : colors.inactiveColor,
+                      margin: 3,
+                      borderRadius: 18,
+                    }}>
+                    <TextComp
+                      color={
+                        selectedCat == res.category_id
+                          ? colors.white
+                          : colors.primary
+                      }
+                      fontSize={12}
+                      text={res.category_name_en}></TextComp>
+                  </Pressable>
+                );
+              })}
+          </ScrollView>
+        </View>
+
         {loading && <CategoryLoading />}
         <FlatlistComp
           DATA={products.filter(item =>
@@ -64,14 +99,6 @@ const Index = ({navigation, route}) => {
           )}
           numColumns={2}
           renderItem={renderProduct}
-        />
-        <Fab
-          onPress={() =>
-            navigation.navigate('AddProduct', {
-              isEdit: false,
-              categoryId: category.category_id,
-            })
-          }
         />
       </SubContainer>
     </Container>
