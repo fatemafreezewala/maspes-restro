@@ -60,7 +60,6 @@ const Index = ({navigation, onChangeText}) => {
       <SubContainer>
         <SearchBar placeholder="Search Category" onChangeText={setTerm} />
         {loading && <CategoryLoading />}
-
         <FlatlistComp
           DATA={categories.filter(item =>
             item.category_name_en.toLowerCase()?.includes(term.toLowerCase()),
@@ -68,7 +67,6 @@ const Index = ({navigation, onChangeText}) => {
           numColumns={2}
           renderItem={renderCategories}
         />
-        
       </SubContainer>
     </Container>
   );

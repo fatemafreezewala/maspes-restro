@@ -26,7 +26,7 @@ const ProductCard = ({item}:ProductCardTypes) => {
         ]}>
         <FastImage
           style={{width: '30%', height: 100, borderRadius: 10}}
-          source={{uri: `${imageUrl}/${item.prod_name_image}`}}></FastImage>
+          source={{uri: `${imageUrl}/${item?.prod_name_image}`}}></FastImage>
         <View
           style={[
             globalStyle.row,
@@ -37,11 +37,11 @@ const ProductCard = ({item}:ProductCardTypes) => {
               type="normal"
               color={colors.black}
               fontSize={12}
-              text={item.prod_name_en}></TextComp>
+              text={item?.prod_name_en}></TextComp>
             <TextComp
               type="medium"
               color={colors.primary}
-              text={`${currency} ${item.prod_offer_price}`}></TextComp>
+              text={`${currency} ${item?.prod_offer_price}`}></TextComp>
           </View>
           <View style={{alignItems:'center'}}>
             <TouchableOpacity style={styles.addSubtractBtn}>

@@ -79,7 +79,16 @@ const Product = ({item, onPress, fetchProducts, categoryId}) => {
         ]}>
         <View style={{flex: 3}}>
           {!item.prod_name_image ? (
-            <SvgXml height={120}  width={'100%'} xml={defaultProductIcon}></SvgXml>
+          //  <View style={{backgroundColor:'#E6E6E6'}}>
+          //    <SvgXml height={120}  width={'100%'} xml={defaultProductIcon}></SvgXml>
+          //  </View>
+          <FastImage resizeMode='cover' style={{
+            width: '100%',
+            height: 120,
+            borderTopRightRadius: 10,
+            borderTopLeftRadius: 10
+            
+          }} source={require('../../assets/images/home/defaultpro.png')}></FastImage>
           ) : (
             <FastImage
               style={[

@@ -68,7 +68,14 @@ const ProductDetail = ({id, setModalVisible, modalVisible}) => {
             name="close"></Ant> 
           {item &&  !item.prod_name_image  ? (
             // <SvgXml height={180}  width={'100%'} xml={defaultProductIcon}></SvgXml>
-            <DefaultProductIcon width="100%" height={180}></DefaultProductIcon>
+            // <DefaultProductIcon width="100%" height={180}></DefaultProductIcon>
+            <FastImage resizeMode='cover' style={{
+              width: '100%',
+              height: 180,
+              borderTopRightRadius: 15,
+              borderTopLeftRadius: 15,
+              
+            }} source={require('../../assets/images/home/defaultpro.png')}></FastImage>
           ) : (
             <FastImage
               style={{

@@ -14,6 +14,8 @@ import Notifications from '../screens/More/Notifications';
 import ResDetails from '../screens/More/ResDetails';
 import Info from '../screens/More/Info';
 import Tables from '../screens/Table/Index';
+import Checkout from '../screens/Checkout/Index';
+import Address from '../screens/Address/Index';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,7 +67,6 @@ const App = () => {
                   name="SignUp"
                   component={SignUp}
                 />
-                
               </>
             ) : (
               <>
@@ -105,16 +106,26 @@ const App = () => {
                   component={Table}
                 />
                 <Stack.Screen
-                  options={screenOptions} 
+                  options={screenOptions}
                   name="Info"
                   component={Info}
                 />
                 <Stack.Screen
-                  options={screenOptions} 
+                  options={screenOptions}
                   name="Tables"
                   component={Tables}
                 />
-                
+                <Stack.Screen
+                  options={screenOptions}
+                  name="Checkout"
+                  component={Checkout}
+                />
+
+                <Stack.Screen
+                  options={screenOptions}
+                  name="Address"
+                  component={Address}
+                />
               </>
             )}
           </Stack.Navigator>

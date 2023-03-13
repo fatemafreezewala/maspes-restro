@@ -5,15 +5,20 @@ import currency from '../../utilities/currency';
 import colors from '../../utilities/colors';
 import margins from '../../utilities/margins';
 import Button from '../Button';
+export interface CartTotalTypes {
+  onPress?: Function;
+  showButton?:boolean
+  
+}
+const CartTotalComponent = ({onPress,showButton}:CartTotalTypes) => {
 
-const CartTotalComponent = () => {
   return (
     <View
       style={{
         borderTopWidth: 1,
         borderTopColor: colors.primary,
-       
-        paddingTop:10
+
+        paddingTop: 10,
       }}>
       <TextComp color="#000" type="semibold" text="Charges"></TextComp>
       <View style={styles.row}>
@@ -52,7 +57,10 @@ const CartTotalComponent = () => {
           type="semibold"
           text={`${currency} 10`}></TextComp>
       </View>
-      <Button style={{width:'60%',alignSelf:'center'}} text='Checkout'></Button>
+     {showButton && ( <Button
+        onPress={onPress}
+        style={{width: '60%', alignSelf: 'center'}}
+        text="Checkout"></Button>)}
     </View>
   );
 };
@@ -63,6 +71,5 @@ const styles = StyleSheet.create({
   row: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    
   },
 });

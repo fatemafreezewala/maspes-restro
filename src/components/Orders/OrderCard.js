@@ -9,7 +9,7 @@ import fontSize from '../../utilities/fontSize';
 import fontFamily from '../../utilities/fontFamily';
 import currency from '../../utilities/currency';
 import Logo from '../../assets/images/home/logo.svg'
-const OrderCard = ({item, onPress, showUser = true, showSubItems = false}) => {
+const OrderCard = ({item, onPress, showUser = true, showSubItems = false,showStatus=true}) => {
   const userIco = `
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_344_3008)">
@@ -163,7 +163,7 @@ const OrderCard = ({item, onPress, showUser = true, showSubItems = false}) => {
             </View>
           ))}
       </View>
-      <View
+      {showStatus && (<View
         style={[
           styles.row,
           {justifyContent: 'space-between', marginTop: margins.m5},
@@ -202,7 +202,7 @@ const OrderCard = ({item, onPress, showUser = true, showSubItems = false}) => {
           
         </Text>
         )}
-      </View>
+      </View>)}
     </Pressable>
   );
 };
